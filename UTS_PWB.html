@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTS PWB</title>
+</head>
+<script>
+    function process(){
+
+        var section = document.getElementById("result-section");
+        section.style.visibility = 'visible';
+
+        var nama = document.getElementById("nama").value;
+        var kode = document.getElementById("kodependaftaran").value;
+        var kelas = document.getElementById("kelas").value;
+        var jmlPertemuan = document.getElementById("jmlPertemuan").value;
+        let jmlPeserta = document.getElementById("jmlPeserta").value;
+        var grade = document.getElementById("grade").value;
+
+        var noUrut;
+        var lamaPertemuan;
+        var biayaSubsidi;
+        var jenisKursus;
+        var namaKelas;
+        var lamaPertemuan;
+        var biayaKursus;
+        var hari;
+        var biayaTambahan = 0;
+
+        var biayaTotal;
+
+        namaKelas = kode.substring(0,2);        
+        hari = kode.substring(3,4);
+        noUrut = kode.substring(4,7);
+        lamaPertemuan = kode.substring(7,9);;
+
+        if(namaKelas == "VB"){
+            namaKelas = "Visual Basic";
+            biayaKursus = 750000;
+            jenisKursus = "Pemrograman"
+        }else if(namaKelas == "DP"){
+            namaKelas = "Delphi";
+            biayaKursus = 650000;
+            jenisKursus = "Pemrograman"
+        }else{
+            namaKelas = "Linux"
+            biayaKursus = 800000;
+            jenisKursus = "Sistem Operasi"
+        }
+
+        if(hari == "K"){
+            hari = "Kamis";
+        }else if(hari == "J"){
+            hari = "Jum'at";
+        }else{
+            hari = "Minggu"
+        }
+
+        if(kelas == "priv" && jmlPeserta >= 5){
+            biayaTambahan = 75000 * jmlPeserta;
+        }else if(kelas == "priv" && jmlPeserta < 5){
+            biayaTambahan = 200000 * jmlPeserta;
+        }
+
+        if(kelas == "reg" && jmlPeserta < 10){
+            biayaTambahan = 50000 * jmlPeserta;
+        }
+        
+        biayaTotal = biayaKursus + biayaTambahan;
+        
+        if(grade == "A"){
+            biayaSubsidi = biayaTotal * (5 / 100);
+            biayaTotal = biayaTotal * ((100-5) / 100);            
+        }else if(grade == "B"){
+            biayaSubsidi = biayaTotal * (5 / 100);
+            biayaTotal = biayaTotal * ((100-2) / 100);
+        }else{
+            biayaSubsidi = 0;
+            biayaTotal = biayaTotal;
+        }      
+        
+        document.getElementById("kodePendaftaran").innerHTML = kode;
+        document.getElementById("namaVal").innerHTML = nama;
+        document.getElementById("kelasVal").innerHTML = jenisKursus;
+        document.getElementById("hasilTestAwalVal").innerHTML = grade;
+        document.getElementById("jmlPesertaVal").innerHTML = jmlPeserta;
+        document.getElementById("biayaKursusVal").innerHTML = biayaKursus;
+        document.getElementById("biayaSubsidiVal").innerHTML = biayaSubsidi;
+        document.getElementById("jenisKursusVal").innerHTML = jenisKursus;
+        document.getElementById("noUrutVal").innerHTML = noUrut;
+        document.getElementById("hariVal").innerHTML = hari;
+        document.getElementById("jmlPertemuanVal").innerHTML = jmlPertemuan;
+        document.getElementById("biayaTambahanVal").innerHTML = biayaTambahan;
+        document.getElementById("biayaTotalVal").innerHTML = biayaTotal;
+
+        console.log(biayaTotal);
+    }
+
+    function refresh(){
+        window.location.reload();
+    }
+</script>
+<body>
+    <table style="border: 1px;">
+        <tbody>
+            <tr>
+                <td>Nama</td>
+                <td>:</td>
+                <td>
+                    <input type="text" id="nama"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Kode Pendaftaran</td>
+                <td>:</td>
+                <td>
+                    <select id="kodependaftaran">
+                        <option value="VBSK00108">VBSK00108</option>
+                        <option value="DPSJ00210">DPSJ00210</option>
+                        <option value="LXSM10105">LXSM10105</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Kelas</td>
+                <td>:</td>
+                <td>
+                    <select id="kelas">
+                        <option value="reg">Reguler</option>
+                        <option value="priv">Private</option>
+                    </select>
+                </td>
+                <td></td>
+                <td>Jumlah Pertemuan</td>
+                <td>:</td>
+                <td>
+                    <input type="number" id="jmlPertemuan"/>
+                </td>
+                <td>Kali</td>
+            </tr>
+            <tr>
+                <td>Jumlah Peserta</td>
+                <td>:</td>
+                <td>
+                    <input type="number" id="jmlPeserta"/>
+                </td>
+                <td>orang</td>
+            </tr>
+            <tr>
+                <td>Hasil Test Awal</td>
+                <td>:</td>
+                <td>
+                    <select id="grade">
+                        <option value="A">Grade A</option>
+                        <option value="B">Grade B</option>
+                        <option value="C">Grade C</option>
+                    </select>
+                </td>
+            </tr style="padding-top: 15px;">
+                <td>
+                    <input type="button" value="Proses" onclick="process()"/>
+                </td>
+                <td>
+                    <input type="button" value="Ulang" onclick="refresh()"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+    <div id="result-section" style="visibility: hidden; text-align: -webkit-center;">
+     <div style="text-align: center; ">
+        <h2><b>NUSANTARA COMPUTER CENTER </b></h2>
+        <br/>
+        <h2><b>Kode Pendaftaran : <span id="kodePendaftaran"></span></b></h2>
+    </div>
+    <div>
+     <table style="width: 25%; display: inline-block;">
+        <tbody>
+            <tr>
+                <td>Nama</td>
+                <td>:</td>
+                <td>
+                   <span id="namaVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Kelas</td>
+                <td>:</td>
+                <td>
+                    <span id="kelasVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Hasil Test Awal</td>
+                <td>:</td>
+                <td>
+                    <span id="hasilTestAwalVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah Peserta</td>
+                <td>:</td>
+                <td>
+                    <span id="jmlPesertaVal"></span> 
+                </td>
+                <td>orang</td>
+            </tr>
+            <tr>
+                <td>Biaya Kursus</td>
+                <td>:</td>
+                <td>
+                    <span id="biayaKursusVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Biaya Subsidi</td>
+                <td>:</td>
+                <td>
+                    <span id="biayaSubsidiVal"></span> 
+                </td>
+            </tr>           
+         <tbody/>
+     </table>
+     <table style="width: 25%; display: inline-block;">
+        <tbody>
+            <tr>
+                <td>Jenis Kursus</td>
+                <td>:</td>
+                <td>
+                    <span id="jenisKursusVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>No. Urut</td>
+                <td>:</td>
+                <td>
+                    <span id="noUrutVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Hari</td>
+                <td>:</td>
+                <td>
+                    <span id="hariVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah Pertemuan</td>
+                <td>:</td>
+                <td>
+                    <span id="jmlPertemuanVal"></span> 
+                </td>
+                <td>Kali</td>
+            </tr>
+            <tr>
+                <td>Biaya Tambahan</td>
+                <td>:</td>
+                <td>
+                    <span id="biayaTambahanVal"></span> 
+                </td>
+            </tr>
+            <tr>
+                <td>Biaya yang dibayar</td>
+                <td>:</td>
+                <td>
+                    <span id="biayaTotalVal"></span> 
+                </td>
+            </tr>           
+         <tbody/>
+     </table>
+    </div>
+</div>
+</body>
+</html>
